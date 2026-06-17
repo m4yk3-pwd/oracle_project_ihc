@@ -1,0 +1,87 @@
+.app-footer {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  text-align: center;
+
+  z-index: 10;
+
+  user-select: none;
+
+  animation: footerFadeIn 2s ease;
+}
+
+.footer-divider {
+  display: flex;
+  gap: 12px;
+
+  color: rgba(200, 169, 106, 0.75);
+  font-size: 0.9rem;
+}
+
+.footer-title {
+  color: rgba(200, 169, 106, 0.9);
+
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 8px rgba(200, 169, 106, 0.3),
+    0 0 16px rgba(200, 169, 106, 0.15);
+}
+
+.footer-credits {
+  color: rgba(234, 234, 240, 0.65);
+
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.footer-credits strong {
+  color: #c8a96a;
+  font-weight: 600;
+}
+
+.footer-quote {
+  font-style: italic;
+  font-size: 0.7rem;
+
+  color: rgba(234, 234, 240, 0.4);
+
+  max-width: 300px;
+}
+
+@keyframes footerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-title {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+  }
+
+  .footer-credits {
+    font-size: 0.7rem;
+  }
+
+  .footer-quote {
+    font-size: 0.65rem;
+  }
+}

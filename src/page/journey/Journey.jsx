@@ -6,6 +6,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {JourneyProgress} from '../../components/JourneyProgress';
 import {TypewriterText} from '../../components/TypewriterText';
 import {stories} from '../../data';
+import './Journey.css';
 
 export const Journey = () => {
   const [currentScene, setCurrentScene] = useState('intro');
@@ -50,63 +51,9 @@ export const Journey = () => {
   const totalSteps = getStoryDepth(story);
   const isEnding = scene.choices.length === 0;
 
-  const styles = {
-    container: {
-      height: '100vh',
-      background: isEnding
-        ? 'radial-gradient(circle at center, #090909, #000000)'
-        : 'radial-gradient(circle at center, #1a1a22, #0f0f14)',
-      color: '#eaeaf0',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '32px',
-      overflow: 'hidden',
-      position: 'relative',
-      fontFamily: 'serif'
-    },
-
-    content: {
-      width: '100%',
-      maxWidth: '700px',
-      position: 'relative',
-      zIndex: 1,
-      textAlign: 'center'
-    },
-
-    title: {
-      color: '#c8a96a',
-      marginBottom: '24px',
-      letterSpacing: '2px',
-      fontSize: '1rem',
-      textTransform: 'uppercase'
-    },
-
-    text: {
-      fontSize: '1.5rem',
-      lineHeight: 1.8,
-      marginBottom: '48px',
-      opacity: 0.9
-    },
-
-    choices: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '16px'
-    },
-
-    finalText: {
-      marginTop: '40px',
-      fontStyle: 'italic',
-      opacity: 0.7,
-      lineHeight: 1.8
-    }
-  };
-
   return (
     <motion.div
-      style={styles.container}
+      className={`journey-container ${isEnding ? 'ending' : ''}`}
       animate={{
         background: isEnding
           ? 'radial-gradient(circle at center, #090909, #000000)'
@@ -117,7 +64,8 @@ export const Journey = () => {
       }}
     >
       <ParticleBackground />
-      <div style={styles.content}>
+      <motion.div className="journey-fog"></motion.div>
+      <div className="journey-content">
         {!isEnding && <JourneyProgress current={depth} total={totalSteps - 1} />}
         <AnimatePresence mode="wait">
           <motion.div
@@ -139,10 +87,10 @@ export const Journey = () => {
               ease: 'easeInOut'
             }}
           >
-            <p style={styles.title}>{scene.title}</p>
+            <p className="journey-title">{scene.title}</p>
 
             <motion.p
-              style={styles.text}
+              className="journey-text"
               initial={{
                 opacity: 0
               }}
@@ -163,7 +111,7 @@ export const Journey = () => {
             </motion.p>
 
             {scene.choices.length > 0 ? (
-              <div style={styles.choices}>
+              <div className="journey-choices">
                 {scene.choices.map((choice, index) => (
                   <ButtonChoice
                     disabled={!showChoices || isTransitioning}
@@ -179,7 +127,7 @@ export const Journey = () => {
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 transition={{delay: 1}}
-                style={styles.finalText}
+                className="journey-final-text"
               >
                 {memory.map((text, index) => (
                   <p key={index}>{text}</p>
@@ -191,9 +139,7 @@ export const Journey = () => {
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 transition={{delay: 2}}
-                style={{
-                  marginTop: '40px'
-                }}
+                className="journey-restart"
               >
                 <ButtonChoice onClick={() => navigate('/')}>Iniciar Nova Jornada</ButtonChoice>
               </motion.div>
@@ -201,6 +147,7 @@ export const Journey = () => {
           </motion.div>
         </AnimatePresence>
       </div>
+      <footer className="app-footer">Desenvolvido por Mayke Anselmo</footer>
     </motion.div>
   );
 };

@@ -3,6 +3,8 @@ import {motion} from 'framer-motion';
 import {ParticleBackground} from '../../components/ParticleBackground';
 import {useNavigate} from 'react-router-dom';
 import {stories} from '../../data/index';
+import './Home.css';
+import {Footer} from '../../components/Footer';
 
 const frases = [
   'Nem todo caminho se revela antes do primeiro passo.',
@@ -33,7 +35,6 @@ const useIsMobile = () => {
 };
 
 export const Home = () => {
-  const isMobile = useIsMobile();
   const [isLeaving, setIsLeaving] = useState(false);
   const navigate = useNavigate();
 
@@ -41,56 +42,6 @@ export const Home = () => {
     const randomIndex = Math.floor(Math.random() * frases.length);
     return frases[randomIndex];
   });
-
-  const styles = {
-    container: {
-      height: '100vh',
-      padding: '20px',
-      background: 'radial-gradient(circle at center, #1a1a22, #0f0f14)',
-      color: '#eaeaf0',
-      display: 'flex',
-      gap: isMobile ? '24px' : '64px',
-      flexDirection: isMobile ? 'column' : 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
-      fontFamily: 'serif',
-
-      position: 'relative',
-      overflow: 'hidden'
-    },
-    image: {
-      width: isMobile ? '180px' : '320px',
-      height: 'auto'
-    },
-    title: {
-      fontSize: isMobile ? '2rem' : '3rem',
-      color: '#c8a96a',
-      marginBottom: '10px'
-    },
-    frase: {
-      fontStyle: 'italic',
-      opacity: 0.8,
-      marginBottom: '30px',
-      fontSize: isMobile ? '0.85rem' : '1rem'
-    },
-    button: {
-      padding: '12px 30px',
-      border: '1px solid #c8a96a',
-      background: 'transparent',
-      color: '#eaeaf0',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      fontSize: '1rem',
-      transition: '0.3s',
-      marginBottom: '30px'
-    },
-    description: {
-      maxWidth: '400px',
-      fontSize: '0.9rem',
-      opacity: 0.6
-    }
-  };
 
   const onStart = () => {
     const randomIndex = Math.floor(Math.random() * stories.length);
@@ -110,7 +61,7 @@ export const Home = () => {
 
   return (
     <motion.div
-      style={styles.container}
+      className="home-container"
       initial={{opacity: 0}}
       animate={{opacity: 1}}
       transition={{duration: 1.5}}
@@ -119,7 +70,7 @@ export const Home = () => {
 
       <motion.img
         src="/crystal-ball.png"
-        style={styles.image}
+        className="home-image"
         animate={{
           scale: isLeaving ? 1.4 : 1,
           opacity: isLeaving ? 0 : 1,
@@ -138,7 +89,7 @@ export const Home = () => {
         transition={{delay: 0.4, duration: 1}}
       >
         <motion.h1
-          style={styles.title}
+          className="home-title"
           animate={{
             opacity: isLeaving ? 0 : 1,
             y: isLeaving ? -20 : 0
@@ -150,7 +101,7 @@ export const Home = () => {
         </motion.h1>
 
         <motion.p
-          style={styles.frase}
+          className="home-frase"
           animate={{
             opacity: isLeaving ? 0 : 1,
             y: isLeaving ? -20 : 0
@@ -162,7 +113,7 @@ export const Home = () => {
         </motion.p>
 
         <motion.button
-          style={styles.button}
+          className="home-button"
           animate={{
             opacity: isLeaving ? 0 : 1
           }}
@@ -180,7 +131,7 @@ export const Home = () => {
         </motion.button>
 
         <motion.p
-          style={styles.description}
+          className="home-description"
           initial={{opacity: 0}}
           animate={{opacity: 0.6}}
           transition={{delay: 1.3}}
@@ -189,6 +140,7 @@ export const Home = () => {
           caminho.
         </motion.p>
       </motion.div>
+      <Footer />
     </motion.div>
   );
 };
