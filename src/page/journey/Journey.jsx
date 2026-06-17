@@ -6,6 +6,8 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {JourneyProgress} from '../../components/JourneyProgress';
 import {TypewriterText} from '../../components/TypewriterText';
 import {stories} from '../../data';
+import {Footer} from '../../components/Footer';
+
 import './Journey.css';
 
 export const Journey = () => {
@@ -30,16 +32,26 @@ export const Journey = () => {
     }, 1500);
   };
 
-  const getStoryDepth = (story, sceneId = 'intro') => {
+  const getStoryDepth = (story, sceneId = 'intro', visited = new Set()) => {
+    if (visited.has(sceneId)) {
+      return 0;
+    }
+
+    visited.add(sceneId);
+
     const scene = story[sceneId];
 
-    if (!scene) return 0;
+    if (!scene) {
+      return 0;
+    }
 
-    if (!scene.choices.length) {
+    if (scene.choices.length === 0) {
       return 1;
     }
 
-    const depths = scene.choices.map((choice) => getStoryDepth(story, choice.next));
+    const depths = scene.choices.map((choice) =>
+      getStoryDepth(story, choice.next, new Set(visited))
+    );
 
     return 1 + Math.max(...depths);
   };
@@ -147,7 +159,7 @@ export const Journey = () => {
           </motion.div>
         </AnimatePresence>
       </div>
-      <footer className="app-footer">Desenvolvido por Mayke Anselmo</footer>
+      <Footer />
     </motion.div>
   );
 };
