@@ -1,9 +1,10 @@
 import {motion} from 'framer-motion';
 
-export const ButtonChoice = ({children, onClick}) => {
+export const ButtonChoice = ({children, onClick, disabled = false}) => {
   return (
     <motion.button
       onClick={onClick}
+      disabled={disabled}
       whileHover={{
         scale: 1.03,
         backgroundColor: '#c8a96a',
